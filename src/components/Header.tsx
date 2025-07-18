@@ -1,12 +1,11 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import { useRouter } from "next/navigation";
 import { User } from "@supabase/supabase-js";
 
-import { Kosugi_Maru } from "next/font/google";
+
 import StarryBackground from "./StarryBackground";
 import { UoqMunThenKhung } from "next/font/google";
 
@@ -15,10 +14,6 @@ const uoq = UoqMunThenKhung({
   weight: "400",                   // あれば指定。なければ省略可
 });
 
-const kosugiMaru = Kosugi_Maru({
-  weight: "400",
-  subsets: ["latin"], // 日本語も使うならjapaneseを入れる
-});
 
 export function Header() {
   const [user, setUser] = useState<User | null>(null);
@@ -45,11 +40,7 @@ export function Header() {
     };
   }, []);
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    setUser(null);
-    router.push("/logout-complete");
-  };
+
 
   const handleLogoClick = () => {
     router.push("/?page=1");

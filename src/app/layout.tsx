@@ -2,13 +2,7 @@ import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
-import { DM_Serif_Display } from 'next/font/google';
-import StarryBackground from "@/components/StarryBackground";
 
-const dmSerif = DM_Serif_Display({
-  weight: '400',
-  subsets: ['latin'],
-});
 
 export const metadata = {
   title: "ホロスコープ研究所",
@@ -32,7 +26,7 @@ export default function RootLayout({
         <Footer />
         <ScrollToTop />
 
-       
+
       </body>
     </html>
   );

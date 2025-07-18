@@ -68,7 +68,6 @@ export default function CommentList({ threadId }: { threadId: string }) {
   };
 
 const isCommentLimitReached = comments.length >= 1000;
-const isCommentFormAllowed = comments.length > 10; // 10件超えたらフォーム表示
 
 if (comments.length === 0) {
   return (
