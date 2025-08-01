@@ -1,12 +1,11 @@
-import ThreadClient from "./ThreadClient";
+// src/app/threads/[threadId]/page.tsx
 
-type Params = { threadId: string } | Promise<{ threadId: string }>;
+export const runtime = "nodejs";
 
-export default function ThreadPage({ params }: { params: Params }) {
-  if ("then" in params) {
-    // params が Promise なら
-    // まだ解決していないのでとりあえず null を返すか何か
-    return null;
-  }
-  return <ThreadClient threadId={params.threadId} />;
+export default function ThreadPage({
+  params,
+}: {
+  params: { threadId: string };
+}) {
+  return <div>Thread ID: {params.threadId}</div>;
 }
