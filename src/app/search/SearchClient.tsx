@@ -6,6 +6,14 @@ import { useSearchParams } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
 import { tagList } from "@/components/TagList";
 
+type Thread = {
+  id: string;
+  title: string;
+  author_name?: string;
+  created_at: string;
+  tags?: string[];
+};
+
 function getTagNameByName(name: string | null) {
   if (!name) return "";
   const found = tagList.find((t) => t.name === name);
@@ -18,7 +26,7 @@ export default function SearchClient() {
   const rawTag = searchParams.get("tag");
   const tag = rawTag ? decodeURIComponent(rawTag.trim()) : "";
 
-  const [threads, setThreads] = useState<any[]>([]);
+  const [threads, setThreads] = useState<Thread[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 

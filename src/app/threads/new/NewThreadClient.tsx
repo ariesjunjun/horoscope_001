@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
 import { tagList } from "@/components/TagList";
-
+import Image from "next/image";
 
 export default function NewThreadClient() {
   const [defaultAuthorName, setDefaultAuthorName] = useState("");
@@ -17,7 +17,6 @@ export default function NewThreadClient() {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   const router = useRouter();
-
   const tagOptions = tagList.map((tag) => tag.name);
 
   useEffect(() => {
@@ -38,15 +37,20 @@ export default function NewThreadClient() {
   useEffect(() => {
     const fetchUserName = async () => {
       const { data: { session }, error } = await supabase.auth.getSession();
+
+if (error) {
+  console.error("セッション取得エラー:", error);
+  return;
+}
       if (!session?.user) {
         console.error("ユーザーセッションが見つかりません");
         return;
       }
-      const userId = session.user.id;
+
       const { data: profile, error: profileError } = await supabase
         .from("profiles")
         .select("username")
-        .eq("id", userId)
+        .eq("id", session.user.id)
         .single();
 
       if (profileError) {
@@ -58,6 +62,7 @@ export default function NewThreadClient() {
       setDefaultAuthorName(name);
       setAuthorName((cur) => (cur ? cur : name));
     };
+
     fetchUserName();
   }, []);
 
@@ -75,7 +80,7 @@ export default function NewThreadClient() {
 
     let imageUrl = "";
     if (imageFile) {
-      const fileExt = imageFile.name.split(".").pop();
+      const fileExt = imageFile.name.includes(".") ? imageFile.name.split(".").pop() : "png";
       const fileName = `${Date.now()}.${fileExt}`;
       const bucketName = "thread-image";
 
@@ -94,6 +99,12 @@ export default function NewThreadClient() {
         .from(bucketName)
         .getPublicUrl(fileName);
 
+      if (!publicUrlData?.publicUrl) {
+        alert("画像URLの取得に失敗しました。");
+        setLoading(false);
+        return;
+      }
+
       imageUrl = publicUrlData.publicUrl;
     }
 
@@ -108,15 +119,17 @@ export default function NewThreadClient() {
       authorName: postAuthorName,
       anonymous: anonymous ? "1" : "0",
     });
+
     if (selectedTags.length > 0) {
       params.set("tags", selectedTags.join(","));
     }
+
     if (imageUrl) {
       params.set("imageUrl", imageUrl);
     }
 
     router.push(`/threads/confirm?${params.toString()}`);
-    setLoading(false);
+    // setLoading(false); // ← 不要、画面遷移するため
   };
 
   return (
@@ -127,9 +140,7 @@ export default function NewThreadClient() {
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* タイトル */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            タイトル
-          </label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">タイトル</label>
           <input
             type="text"
             className="w-full border border-[#c2d2c5] focus:border-[#1e3932] focus:ring-1 focus:ring-[#1e3932] p-3 rounded transition"
@@ -141,9 +152,7 @@ export default function NewThreadClient() {
 
         {/* 本文 */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            本文
-          </label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">本文</label>
           <textarea
             className="w-full border border-[#c2d2c5] focus:border-[#1e3932] focus:ring-1 focus:ring-[#1e3932] p-3 rounded transition"
             rows={5}
@@ -215,6 +224,17 @@ export default function NewThreadClient() {
             }}
             className="w-full"
           />
+          {imageFile && (
+  <div className="mt-2">
+    <Image
+      src={URL.createObjectURL(imageFile)}
+      alt="プレビュー"
+      width={200}
+      height={200}
+      className="max-h-48 border rounded"
+    />
+  </div>
+)}
         </div>
 
         <button

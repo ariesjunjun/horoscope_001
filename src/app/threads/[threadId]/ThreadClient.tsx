@@ -9,6 +9,7 @@ import { Sidebar } from "@/components/Sidebar";
 import { ReportModal } from "./ReportModal";
 import { supabase } from "@/lib/supabaseClient";
 import Link from "next/link";
+import Image from "next/image";
 
 function ReportButton({ threadId }: { threadId: string }) {
   const [open, setOpen] = useState(false);
@@ -21,7 +22,9 @@ function ReportButton({ threadId }: { threadId: string }) {
       >
         不適切な投稿を通報する
       </button>
-      {open && <ReportModal threadId={threadId} onClose={() => setOpen(false)} />}
+      {open && (
+        <ReportModal threadId={threadId} onClose={() => setOpen(false)} />
+      )}
     </>
   );
 }
@@ -90,7 +93,9 @@ export default function ThreadClient({ threadId }: { threadId: string }) {
     <main className="flex flex-col md:flex-row gap-6 w-full">
       {/* メインコンテンツ */}
       <section className="flex-1 w-full max-w-full md:max-w-4xl lg:max-w-5xl mx-auto px-2 sm:px-4 py-8">
-        <h1 className="text-2xl md:text-3xl font-bold text-primary mb-6">{thread.title}</h1>
+        <h1 className="text-2xl md:text-3xl font-bold text-primary mb-6">
+          {thread.title}
+        </h1>
 
         {thread.tags && thread.tags.length > 0 && (
           <div className="flex flex-wrap gap-2 mb-6">
@@ -107,15 +112,20 @@ export default function ThreadClient({ threadId }: { threadId: string }) {
         )}
 
         {thread.body && (
-          <p className="mb-4 text-gray-700 whitespace-pre-wrap">{thread.body}</p>
+          <p className="mb-4 text-gray-700 whitespace-pre-wrap">
+            {thread.body}
+          </p>
         )}
 
         {thread.image_url && (
           <div className="mb-6">
-            <img
+            <Image
               src={thread.image_url}
               alt="投稿画像"
+              width={400} // 適切な横幅を指定
+              height={300} // アスペクト比に合わせて調整（不要なら自動でOK）
               className="max-w-xs w-full h-auto"
+              style={{ height: "auto" }}
             />
           </div>
         )}

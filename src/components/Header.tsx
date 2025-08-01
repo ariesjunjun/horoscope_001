@@ -1,40 +1,33 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import { useRouter } from "next/navigation";
-import { User } from "@supabase/supabase-js";
 
+import Image from "next/image";
 
 import StarryBackground from "./StarryBackground";
 
-
 export function Header() {
-  const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
 
   useEffect(() => {
     const getUser = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      setUser(user);
+      await supabase.auth.getUser();
     };
 
     getUser();
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user || null);
+    } = supabase.auth.onAuthStateChange(() => {
+      // 何もしない
     });
 
     return () => {
       subscription.unsubscribe();
     };
   }, []);
-
-
 
   const handleLogoClick = () => {
     router.push("/?page=1");
@@ -47,13 +40,15 @@ export function Header() {
       <div className="max-w-7xl mx-auto flex justify-between items-center py-2 md:py-4 px-4 md:px-8">
         {/* ロゴ */}
         <h1
-          className={`pt-2 pb-4 text-2xl flex items-center gap-2 cursor-pointer font-sans`}
+          className={`pt-2 pb-4 text-2xl flex items-center gap-2 cursor-pointer`}
           onClick={handleLogoClick}
         >
-          <img
+          <Image
             src="/stars-shine-svgrepo-com.svg"
             alt="planet icon"
-            className="w-7 h-7 relative -top-[1px] invert brightness-0 translate-y-[1px] "
+            width={28} // w-7 = 1.75rem = 28px
+            height={28} // h-7 = 1.75rem = 28px
+            className="relative -top-[1px] invert brightness-0 translate-y-[1px]"
           />
 
           <span className="text-2xl hover:opacity-80 transition">

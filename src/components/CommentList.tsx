@@ -50,6 +50,21 @@ export default function CommentList({ threadId }: { threadId: string }) {
   };
 
   useEffect(() => {
+    const fetchComments = async () => {
+      const { data, error } = await supabase
+        .from("comments")
+        .select("*")
+        .eq("thread_id", threadId)
+        .order("serial_number", { ascending: true });
+
+      if (error) {
+        console.error(error);
+        return;
+      }
+
+      setComments(data || []);
+    };
+
     fetchComments();
   }, [threadId]);
 

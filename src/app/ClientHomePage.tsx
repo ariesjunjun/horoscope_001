@@ -6,6 +6,7 @@ import { ThreadButtons } from "@/components/ThreadButtons";
 import { Sidebar } from "@/components/Sidebar";
 import { supabase } from "@/lib/supabaseClient";
 import { useSearchParams, useRouter } from "next/navigation";
+import Image from "next/image";
 
 type Thread = {
   id: string;
@@ -44,7 +45,9 @@ export default function ClientHomePage() {
   const currentPage = Number(searchParams.get("page")) || 1;
 
   const [threads, setThreads] = useState<Thread[]>([]);
-  const [commentCounts, setCommentCounts] = useState<Record<string, number>>({});
+  const [commentCounts, setCommentCounts] = useState<Record<string, number>>(
+    {}
+  );
   const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(true);
 
@@ -136,44 +139,49 @@ export default function ClientHomePage() {
                     key={thread.id}
                     className="border border-primary rounded-xl bg-white shadow-sm hover:shadow-md transition"
                   >
-                    {/* Link の中に a タグを入れて className は a タグに */}
-                    <Link href={`/threads/${thread.id}`} legacyBehavior>
-                      <a className="flex p-4 no-underline text-inherit">
-                        <div className="flex flex-col items-center justify-center w-16 mr-4">
-                          <span className="text-xl font-bold text-gray-800">
-                            {commentCounts[thread.id] || 0}
-                          </span>
-                          <span className="text-xs text-gray-500">コメント</span>
-                        </div>
+                   <Link
+  href={`/threads/${thread.id}`}
+  className="flex p-4 no-underline text-inherit"
+>
+  <div className="flex flex-col items-center justify-center w-16 mr-4">
+    <span className="text-xl font-bold text-gray-800">
+      {commentCounts[thread.id] || 0}
+    </span>
+    <span className="text-xs text-gray-500">
+      コメント
+    </span>
+  </div>
 
-                        {thread.image_url && (
-                          <div className="flex-shrink-0 mr-4">
-                            <img
-                              src={thread.image_url}
-                              alt="サムネイル"
-                              className="w-24 h-24 object-cover rounded"
-                            />
-                          </div>
-                        )}
+  {thread.image_url && (
+    <div className="flex-shrink-0 mr-4">
+      <Image
+        src={thread.image_url}
+        alt="サムネイル"
+        width={96}
+        height={96}
+        className="object-cover rounded"
+      />
+    </div>
+  )}
 
-                        <div className="flex-1 flex flex-col gap-2">
-                          <h2 className="text-base md:text-lg font-semibold text-primary">
-                            {thread.title}
-                          </h2>
+  <div className="flex-1 flex flex-col gap-2">
+    <h2 className="text-base md:text-lg font-semibold text-primary">
+      {thread.title}
+    </h2>
 
-                          {thread.body && (
-                            <p className="text-sm text-gray-700 line-clamp-2">
-                              {thread.body}
-                            </p>
-                          )}
+    {thread.body && (
+      <p className="text-sm text-gray-700 line-clamp-2">
+        {thread.body}
+      </p>
+    )}
 
-                          <div className="mt-2 text-xs text-gray-500 flex flex-wrap gap-2">
-                            <span>投稿者: {thread.author_name || "匿名"}</span>
-                            <span>{formatRelativeTime(timeToShow)}</span>
-                          </div>
-                        </div>
-                      </a>
-                    </Link>
+    <div className="mt-2 text-xs text-gray-500 flex flex-wrap gap-2">
+      <span>投稿者: {thread.author_name || "匿名"}</span>
+      <span>{formatRelativeTime(timeToShow)}</span>
+    </div>
+  </div>
+</Link>
+
                   </li>
                 );
               })}
