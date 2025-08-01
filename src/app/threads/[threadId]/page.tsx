@@ -1,11 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import ThreadClient from "./ThreadClient";
 
-export default function ThreadPage({
-  params,
-}: {
-  params: { threadId: string };
-}) {
+export default async function ThreadPage({ params }: { params: { threadId: string } }) {
+  // ここでデータ取得などもできる（必要なら）
   return <ThreadClient threadId={params.threadId} />;
 }
