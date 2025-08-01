@@ -63,7 +63,7 @@ export default function QaPage() {
         </div>
 
         <div className="text-sm text-gray-500 mt-10 text-center">
-          アストロ研究所 管理人：ユズハ
+          アストロ研究所 管理人
         </div>
       </div>
     </div>

@@ -11,7 +11,7 @@ export default function CommentConfirmClient() {
   const threadId = searchParams.get("threadId");
   const parentId = searchParams.get("parentId") || null;
   const body = searchParams.get("body") || "";
-  const authorName = searchParams.get("authorName") || "名無しの創作者さん";
+  const authorName = searchParams.get("authorName") || "トクメーの占星術師";
 
   const [userId, setUserId] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);

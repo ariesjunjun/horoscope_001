@@ -1,9 +1,5 @@
 // app/threads/new/page.tsx
-import dynamic from "next/dynamic";
-
-const NewThreadClient = dynamic(() => import("./NewThreadClient"), {
-  ssr: false,
-});
+import NewThreadClient from "./NewThreadClient";
 
 export default function NewThreadPage() {
   return <NewThreadClient />;

@@ -38,11 +38,14 @@ type Thread = {
 
 export default function ThreadClient({ threadId }: { threadId: string }) {
   const [thread, setThread] = useState<Thread | null>(null);
+  const [commentCount, setCommentCount] = useState<number>(0);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
     async function fetchThreadAndCount() {
+      setLoading(true);
+
       const [threadRes, countRes] = await Promise.all([
         supabase.from("threads").select("*").eq("id", threadId).single(),
         supabase
@@ -52,7 +55,7 @@ export default function ThreadClient({ threadId }: { threadId: string }) {
       ]);
 
       if (threadRes.error) {
-        console.error(threadRes.error);
+        console.error("スレッド取得エラー:", threadRes.error);
         setLoading(false);
         return;
       }
@@ -103,18 +106,24 @@ export default function ThreadClient({ threadId }: { threadId: string }) {
           </div>
         )}
 
-        {thread.body && <p className="mb-4 text-gray-700 whitespace-pre-wrap">{thread.body}</p>}
+        {thread.body && (
+          <p className="mb-4 text-gray-700 whitespace-pre-wrap">{thread.body}</p>
+        )}
 
         {thread.image_url && (
           <div className="mb-6">
-            <img src={thread.image_url} alt="投稿画像" className="max-w-xs w-full h-auto" />
+            <img
+              src={thread.image_url}
+              alt="投稿画像"
+              className="max-w-xs w-full h-auto"
+            />
           </div>
         )}
 
         <div className="text-xs text-gray-500 mb-6">
           投稿者：{" "}
           <span className="text-primary font-semibold">
-            {thread.author_name || "名無しの創作者さん"}
+            {thread.author_name || "トクメーの占星術師"}
           </span>{" "}
           ／
           {new Date(thread.created_at).toLocaleString("ja-JP", {
@@ -127,6 +136,10 @@ export default function ThreadClient({ threadId }: { threadId: string }) {
         </div>
 
         <div className="text-xs text-gray-500 mb-2">
+          コメント数：{commentCount} 件
+        </div>
+
+        <div className="text-xs text-gray-500 mb-4">
           <ReportButton threadId={thread.id} />
         </div>
 

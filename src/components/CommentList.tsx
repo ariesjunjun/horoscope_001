@@ -145,7 +145,7 @@ if (comments.length === 0) {
                 <div className="text-right">
                   {parent.author_name
                     ? `投稿者：${parent.author_name}`
-                    : "投稿者：名無しの創作者さん"} ／{" "}
+                    : "投稿者：トクメーの占星術師"} ／{" "}
                   {formatDate(parent.created_at)}
                 </div>
               </div>

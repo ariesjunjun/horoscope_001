@@ -1,10 +1,6 @@
-import React, { Suspense } from "react";
+// app/threads/[threadId]/page.tsx
 import ThreadClient from "./ThreadClient";
 
 export default function ThreadPage({ params }: { params: { threadId: string } }) {
-  return (
-    <Suspense fallback={<div className="text-center mt-8">読み込み中...</div>}>
-      <ThreadClient threadId={params.threadId} />
-    </Suspense>
-  );
+  return <ThreadClient threadId={params.threadId} />;
 }

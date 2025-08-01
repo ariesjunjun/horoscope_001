@@ -17,7 +17,7 @@ export default function CommentForm({
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const defaultAuthorName = "名無しの創作者さん";
+  const defaultAuthorName = "トクメーの占星術師";
 
   // ✅ 確認画面から戻った時の値を復元
   const [body, setBody] = useState(searchParams.get("body") || "");

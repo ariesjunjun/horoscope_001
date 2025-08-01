@@ -10,7 +10,7 @@ export default function ThreadConfirmClient() {
 
   const title = searchParams.get("title") || "";
   const body = searchParams.get("body") || "";
-  const authorName = searchParams.get("authorName") || "名無しの創作者さん";
+  const authorName = searchParams.get("authorName") || "トクメーの占星術師";
   const anonymous = searchParams.get("anonymous") === "1";
   const tags = (searchParams.get("tags") || "")
     .split(",")
@@ -19,6 +19,9 @@ export default function ThreadConfirmClient() {
 
   const [userId, setUserId] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+
+  const imageUrl = searchParams.get("imageUrl") || "";
+
 
   // ユーザー取得
   useEffect(() => {
@@ -46,10 +49,14 @@ export default function ThreadConfirmClient() {
           author_name: authorName,
           author_id: userId,
           tags,
+          image_url: imageUrl,
         },
       ])
       .select("id") // ← 作成したスレッドIDを取得（任意だけど便利）
       .single();
+
+      console.log("data:", data);
+console.error("error:", error);
 
     setSubmitting(false);
 

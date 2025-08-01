@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
+import { tagList } from "@/components/TagList";
+
 
 export default function NewThreadClient() {
   const [defaultAuthorName, setDefaultAuthorName] = useState("");
@@ -16,7 +18,7 @@ export default function NewThreadClient() {
 
   const router = useRouter();
 
-  const tagOptions = ["牡羊座", "火星", "ネイタル"];
+  const tagOptions = tagList.map((tag) => tag.name);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -97,7 +99,7 @@ export default function NewThreadClient() {
 
     const postAuthorName =
       anonymous || !authorName.trim()
-        ? "名無しのアストロロジャー"
+        ? "トクメーの占星術師"
         : authorName.trim();
 
     const params = new URLSearchParams({
@@ -140,7 +142,7 @@ export default function NewThreadClient() {
         {/* 本文 */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            本文（任意）
+            本文
           </label>
           <textarea
             className="w-full border border-[#c2d2c5] focus:border-[#1e3932] focus:ring-1 focus:ring-[#1e3932] p-3 rounded transition"
@@ -161,7 +163,7 @@ export default function NewThreadClient() {
             className="w-full border border-[#c2d2c5] focus:border-[#1e3932] focus:ring-1 focus:ring-[#1e3932] p-3 rounded transition disabled:bg-gray-100"
             value={authorName}
             onChange={(e) => setAuthorName(e.target.value)}
-            placeholder="名無しのアストロロジャー"
+            placeholder="トクメーの占星術師"
           />
           <div className="flex items-center gap-2 mb-2">
             <input
