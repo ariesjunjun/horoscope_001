@@ -3,6 +3,7 @@ import { Tag } from "@/types";
 
 export const tagList: Tag[] = [
   // 既存のタグ
+  { id: "12星座", name: "12星座", count: 25 },
   { id: "牡羊座", name: "牡羊座", count: 25 },
   { id: "牡牛座", name: "牡牛座", count: 18 },
   { id: "双子座", name: "双子座", count: 15 },
@@ -17,6 +18,8 @@ export const tagList: Tag[] = [
   { id: "魚座", name: "魚座", count: 7 },
 
   // 惑星など
+  { id: "惑星", name: "惑星", count: 20 },
+  { id: "小惑星", name: "小惑星", count: 20 },
   { id: "太陽", name: "太陽", count: 20 },
   { id: "月", name: "月", count: 18 },
   { id: "水星", name: "水星", count: 17 },
