@@ -12,6 +12,9 @@ module.exports = {
         text2: '#a5a6a7ff',      //
         room: '#ffe3ecff',      //
       },
+      fontFamily: {
+        sans: ['uoqmunthenkhung', 'sans-serif'],
+      }
     },
   },
   plugins: [],
