@@ -1,6 +1,12 @@
 import ThreadClient from "./ThreadClient";
 
-export default async function ThreadPage({ params }: { params: { threadId: string } }) {
-  // ここでデータ取得などもできる（必要なら）
+type Params = { threadId: string } | Promise<{ threadId: string }>;
+
+export default function ThreadPage({ params }: { params: Params }) {
+  if ("then" in params) {
+    // params が Promise なら
+    // まだ解決していないのでとりあえず null を返すか何か
+    return null;
+  }
   return <ThreadClient threadId={params.threadId} />;
 }
