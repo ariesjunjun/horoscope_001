@@ -7,6 +7,9 @@ import ScrollToTop from "@/components/ScrollToTop";
 export const metadata = {
   title: "ホロスコープ研究所",
   description: "占星術・占いについての雑談掲示板",
+  icons: {
+    icon: "/favicon.ico", // ←ここで指定
+  },
 };
 
 export default function RootLayout({
