@@ -9,7 +9,7 @@ export function ThreadButtons() {
     <div className="flex flex-col md:flex-row gap-4 justify-center mt-12">
       <button
         onClick={() => router.push("/threads/new")}
-        className="px-5 py-3 bg-primary text-white font-semibold rounded-full hover:bg-text transition-colors duration-200"
+        className="px-5 py-3 bg-gradient-to-br from-[#545389] via-[#3b3a75] to-[#0f0e35]  text-white font-semibold rounded-full hover:bg-text transition-colors duration-200"
       >
         スレッドを作成する
       </button>

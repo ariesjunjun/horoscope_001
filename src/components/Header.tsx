@@ -3,10 +3,19 @@
 import { useEffect } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import { useRouter } from "next/navigation";
+import { Kaisei_Decol } from "next/font/google";
 
 import Image from "next/image";
 
 import StarryBackground from "./StarryBackground";
+
+// next/fontでフォントを読み込み
+const kaiseiDecol = Kaisei_Decol({
+  weight: "700",
+  subsets: ["latin"], // 必要に応じて
+  variable: "--font-kaisei-decol",
+  display: "swap",
+});
 
 export function Header() {
   const router = useRouter();
@@ -34,7 +43,8 @@ export function Header() {
   };
 
   return (
-    <header className="bg-primary text-white pt-2">
+    <header className="bg-gradient-to-br from-[#545389] via-[#3b3a75] to-[#0f0e35] text-white pt-2">
+
       <StarryBackground height={80} />
 
       <div className="max-w-7xl mx-auto flex justify-between items-center py-2 md:py-4 px-4 md:px-8">
@@ -51,9 +61,10 @@ export function Header() {
             className="relative -top-[1px] invert brightness-0 translate-y-[1px]"
           />
 
-          <span className="text-2xl hover:opacity-80 transition">
-            ホロスコープ研究所
-          </span>
+<span className={`${kaiseiDecol.className}  text-2xl hover:opacity-80 transition`}>
+  ホロスコープ研究所
+</span>
+
         </h1>
       </div>
 

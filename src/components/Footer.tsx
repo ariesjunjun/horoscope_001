@@ -3,7 +3,7 @@ import StarryBackground from "./StarryBackground";
 
 export function Footer() {
   return (
-    <footer className="relative bg-primary text-white text-center text-xs md:text-sm py-6 mt-10 overflow-hidden">
+    <footer className="relative bg-gradient-to-br from-[#545389] via-[#3b3a75] to-[#0f0e35] text-white text-center text-xs md:text-sm py-6 mt-10 overflow-hidden">
       {/* ← relative と overflow-hidden を追加 */}
       <StarryBackground height={96} />
       <div className="max-w-4xl mx-auto space-y-2 px-4 relative z-10">

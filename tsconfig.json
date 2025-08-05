@@ -34,7 +34,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-  ],
+, "src/app/threads/[threadId]/ThreadPage.jsx", "src/app/threads/[threadId]/page.jsx"  ],
   "exclude": [
     "node_modules"
   ]

@@ -101,6 +101,19 @@ console.error("error:", error);
         <p className="whitespace-pre-wrap bg-gray-100 p-3 rounded mt-1">{body}</p>
       </div>
 
+      {/* 画像プレビュー */}
+{imageUrl && (
+  <div className="mb-6">
+    <label className="font-semibold">画像プレビュー：</label>
+    <img
+      src={imageUrl}
+      alt="選択した画像"
+      className="max-w-full max-h-60 object-contain rounded mt-2 border"
+    />
+  </div>
+)}
+
+
       <div className="flex gap-4">
         <button
           onClick={() => {
